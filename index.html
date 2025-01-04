@@ -78,7 +78,11 @@
     --------------------------------------------- */
     .legend-bubble {
       /* shape & style, but no more position: fixed */
-      position: fixed;
+      position: absolute; /* Change from fixed to absolute */
+      top: 1rem; /* Place it relative to the parent container */
+      right: 1rem; /* Still aligned to the right */
+      z-index: 50;
+      
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -462,7 +466,7 @@
         { code: 'PHYS 121', name: 'University Physics I', credits: 4 },
         { code: 'COSC 114', name: 'Introduction to Computing Using Python', credits: 4 },
         {
-          code: 'HUMA/BUSS 105/106',
+          code: 'HUMA/BUSS XXX',
           name: 'Any HUMA/BUSS Elective',
           credits: 3
         }
@@ -511,7 +515,7 @@
       ],
       Summer: [
         {
-          code: 'HUMA XXX (UAE Studies)',
+          code: 'HUMA 105/106',
           name: 'UAE Studies Elective',
           credits: 3
         }
