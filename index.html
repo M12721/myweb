@@ -263,16 +263,42 @@
   */
 
   const courseRelationships = {
+    // First Year
+    'COSC 101': { prereqs: [], unlocks: ['COSC 114'] },
     'COSC 114': { prereqs: ['COSC 101'], unlocks: ['ECCE 230'] },
-    'ECCE 230': { prereqs: ['COSC 114'], unlocks: ['COSC 201', 'ECCE 336'] },
+    'MATH 111': { prereqs: [], unlocks: ['MATH 112'] },
+    'MATH 112': { prereqs: ['MATH 111'], unlocks: ['MATH 204', 'MATH 232'] },
+    'ENGL 101': { prereqs: [], unlocks: ['ENGL 102'] },
+    'ENGL 102': { prereqs: ['ENGL 101'], unlocks: [] },
+    'CHEM 115': { prereqs: [], unlocks: [] },
+    'PHYS 121': { prereqs: [], unlocks: [] },
+    'GENS 101': { prereqs: [], unlocks: [] },
+    'ENGR 202': { prereqs: [], unlocks: [] },
+  
+    // Second Year
+    'ECCE 230': { prereqs: ['COSC 114'], unlocks: ['COSC 201', 'ECCE 336', 'ECCE 342'] },
     'COSC 201': { prereqs: ['ECCE 230'], unlocks: ['ECCE 354', 'COSC 320'] },
+    'MATH 204': { prereqs: ['MATH 112'], unlocks: [] },
+    'MATH 232': { prereqs: ['MATH 112'], unlocks: [] },
+    'MATH 234': { prereqs: [], unlocks: [] },
+    'MATH 242': { prereqs: [], unlocks: [] },
     'ECCE 336': { prereqs: ['ECCE 230'], unlocks: ['COSC 497'] },
-    'ECCE 354': { prereqs: ['COSC 201'], unlocks: [] },
-    'COSC 320': { prereqs: ['COSC 201'], unlocks: ['COSC 498'] },
     'ECCE 342': { prereqs: ['ECCE 230'], unlocks: ['COSC 312'] },
+    'MATH 214': { prereqs: [], unlocks: [] },
+  
+    // Third Year
+    'COSC 301': { prereqs: [], unlocks: [] },
+    'COSC 320': { prereqs: ['COSC 201'], unlocks: ['COSC 498'] },
+    'ECCE 354': { prereqs: ['COSC 201'], unlocks: [] },
+    'COSC 330': { prereqs: [], unlocks: [] },
+    'ECCE 356': { prereqs: [], unlocks: [] },
     'COSC 312': { prereqs: ['ECCE 342'], unlocks: [] },
+    'COSC 340': { prereqs: [], unlocks: [] },
+    'ECCE 434': { prereqs: [], unlocks: [] },
+  
+    // Fourth Year
     'COSC 497': { prereqs: ['ECCE 336'], unlocks: ['COSC 498'] },
-    'COSC 498': { prereqs: ['COSC 497'], unlocks: [] }
+    'COSC 498': { prereqs: ['COSC 497', 'COSC 320'], unlocks: [] }
   };
 
   const curriculum = {
@@ -280,11 +306,15 @@
       Fall: [
         { code: 'COSC 101', name: 'Foundations of Computer Science', credits: 3 },
         { code: 'MATH 111', name: 'Calculus I', credits: 4 },
-        { code: 'ENGL 101', name: 'Academic English I', credits: 3 }
+        { code: 'ENGL 101', name: 'Academic English I', credits: 3 },
+        { code: 'CHEM 115', name: 'General Chemistry I', credits: 4 },
+        { code: 'GENS 101', name: 'Grand Challenges', credits: 4 },
+        { code: 'GENS 100', name: 'Academic Development & Success', credits: 1 }
       ],
       Spring: [
         { code: 'COSC 114', name: 'Introduction to Computing Using Python', credits: 4 },
         { code: 'MATH 112', name: 'Calculus II', credits: 4 },
+        { code: 'ENGL 102', name: 'Academic English II', credits: 3 },
         { code: 'PHYS 121', name: 'University Physics I', credits: 4 }
       ],
       Summer: [
@@ -295,12 +325,15 @@
       Fall: [
         { code: 'ECCE 230', name: 'Object-Oriented Programming', credits: 4 },
         { code: 'COSC 201', name: 'Computer Systems Organization', credits: 3 },
-        { code: 'MATH 204', name: 'Linear Algebra', credits: 3 }
+        { code: 'MATH 204', name: 'Linear Algebra', credits: 3 },
+        { code: 'MATH 232', name: 'Engineering Mathematics', credits: 3 }
       ],
       Spring: [
         { code: 'ECCE 336', name: 'Introduction to Software Engineering', credits: 3 },
         { code: 'ECCE 342', name: 'Data Structures and Algorithms', credits: 3 },
-        { code: 'MATH 234', name: 'Discrete Mathematics', credits: 3 }
+        { code: 'MATH 234', name: 'Discrete Mathematics', credits: 3 },
+        { code: 'MATH 242', name: 'Introduction to Probability and Statistics', credits: 3 },
+        { code: 'MATH 214', name: 'Mathematical and Statistical Software', credits: 3 }
       ],
       Summer: [
         { code: 'ENGR 399', name: 'Internship', credits: 1 }
@@ -308,29 +341,37 @@
     },
     'Junior': {
       Fall: [
+        { code: 'COSC 301', name: 'Automata, Computability and Complexity', credits: 3 },
         { code: 'COSC 320', name: 'Principles of Programming Languages', credits: 3 },
         { code: 'ECCE 354', name: 'Operating Systems', credits: 3 },
-        { code: 'COSC 330', name: 'Introduction to Artificial Intelligence', credits: 3 }
+        { code: 'COSC 330', name: 'Introduction to Artificial Intelligence', credits: 3 },
+        { code: 'ECCE 356', name: 'Computer Networks', credits: 4 }
       ],
       Spring: [
         { code: 'COSC 312', name: 'Design and Analysis of Algorithms', credits: 3 },
         { code: 'COSC 340', name: 'Introduction to Computer Security', credits: 3 },
-        { code: 'ECCE 434', name: 'Database Systems', credits: 3 }
+        { code: 'ECCE 434', name: 'Database Systems', credits: 3 },
+        { code: 'BUSS XXX', name: 'Business Elective', credits: 3 },
+        { code: 'Technical Elective', name: 'Technical Elective Course', credits: 3 }
       ],
       Summer: [
-        { code: 'GENS 300', name: 'Career Preparation', credits: 1 }
+        { code: 'GENS 300', name: 'Career Preparation', credits: 1 },
+        { code: 'BUSS 322', name: 'Fundamentals of Innovation and Entrepreneurship', credits: 3 }
       ]
     },
     'Senior': {
       Fall: [
         { code: 'COSC 497', name: 'Senior Design Project I', credits: 3 },
         { code: 'HUMA XXX', name: 'Islamic/Arabic Studies Elective', credits: 3 },
+        { code: 'HUMA XXX', name: 'UAE Studies Elective', credits: 3 },
+        { code: 'Technical Elective', name: 'Technical Elective Course', credits: 3 },
         { code: 'Technical Elective', name: 'Technical Elective Course', credits: 3 }
       ],
       Spring: [
         { code: 'COSC 498', name: 'Senior Design Project II', credits: 3 },
         { code: 'Technical Elective', name: 'Technical Elective Course', credits: 3 },
-        { code: 'GENS 400', name: 'Enhancing Employability', credits: 1 }
+        { code: 'Technical Elective', name: 'Technical Elective Course', credits: 3 },
+        { code: 'GENS 400', name: 'Enhancing Employability & Job Readiness', credits: 1 }
       ]
     }
   };
