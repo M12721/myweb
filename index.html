@@ -68,13 +68,14 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 50%;
-      position:relative;
-      left: 1.9%;
+      position: relative;
+      left: 17.5%;
+      
     }
+
 
     .title::after {
       content: "Computer Science 24/25 Plan";
@@ -92,7 +93,7 @@
       padding: 0.25rem 0.5rem;
       min-width: fit-content;
       position:relative;
-      right: 1.9%;
+      right: 17.5%;
     }
 
     .legend-text {
@@ -274,10 +275,17 @@
       }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 660px) {
       .title::after {
         content: "CS 24/25 Plan";
       }
+      
+      .legend-bubble {
+        right: 0%;
+      }
+      
+      
+      
     }
 
 
@@ -285,6 +293,21 @@
       .year-grid {
         grid-template-columns: 1fr;
       }
+      
+      .title {
+        display: none;
+      }
+      
+      .legend-bubble {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+      }
+    
+
       
 
       
