@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>kop</title>
+  <title>Responsive CS Curriculum</title>
   <style>
     :root {
       --gray-50: #fafafa;
@@ -90,7 +90,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.06);
       padding: 0.25rem 0.5rem;
       min-width: fit-content;
-      position:relative;
+      position: relative;
       right: 17.5%;
     }
 
@@ -119,9 +119,8 @@
       height: 0.4rem;
       border-radius: 9999px;
     }
-
-    .dot-amber { background-color: var(--amber-400); }
-    .dot-emerald { background-color: var(--emerald-400); }
+    .dot-amber  { background-color: var(--amber-400); }
+    .dot-emerald{ background-color: var(--emerald-400); }
 
     .year-grid {
       display: grid;
@@ -129,7 +128,7 @@
       flex: 1;
       grid-template-columns: repeat(4, 1fr);
       align-items: start;
-      height: calc(100vh - 3rem);
+      height: calc(100vh - 3rem); /* 2.5rem top-bar + 0.25rem margin-bot + a bit of buffer */
       overflow: hidden;
     }
 
@@ -234,21 +233,19 @@
     .ring-2-amber { box-shadow: 0 0 0 2px var(--amber-400) !important; }
     .bg-emerald-50 { background-color: var(--emerald-50) !important; }
     .ring-2-emerald { box-shadow: 0 0 0 2px var(--emerald-400) !important; }
-
+    
     /* Target iPads (including Mini, Air, and Pro models) */
     @media (min-width: 768px) and (max-width: 1366px) and (hover: none) and (pointer: coarse) {
       html, body {
-        overflow-y: auto; /* Enable scrolling for iPads (original code) */
+        overflow-y: auto; /* original for iPads to enable scrolling if needed */
         overflow-x: hidden;
       }
-
       .container {
-        min-height: auto; 
+        min-height: auto;
       }
-
       .year-grid {
-        min-height: auto; 
-        overflow-y: auto; 
+        min-height: auto;
+        overflow-y: auto;
       }
       .year-block {
         overflow-y: hidden;
@@ -259,15 +256,14 @@
       .year-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-
       .course-card {
         min-height: 3.5rem;
       }
-    } /* <-- close the 640px media query */
+    }
 
     @media (max-width: 1366px) {
       .year-grid {
-        min-height: auto; /* (original code) */
+        min-height: auto;
       }
     }
 
@@ -275,7 +271,6 @@
       .title::after {
         content: "CS 24/25 Plan";
       }
-
       .legend-bubble {
         right: 0%;
       }
@@ -285,11 +280,9 @@
       .year-grid {
         grid-template-columns: 1fr;
       }
-
       .title {
         display: none;
       }
-
       .legend-bubble {
         position: relative;
         width: 100%;
@@ -306,23 +299,38 @@
       }
     }
 
-    /* 
-      -------------------------------------------------------------------------
-      ADDITIONS BELOW: Force "fit on screen" for all devices >= 768px wide
-      (laptops, desktops, AND iPads) by removing scrolling and scaling down.
-      Adjust scale if needed (0.8 → 0.7, 0.85, etc.).
-      -------------------------------------------------------------------------
-    */
+    /* ------------------------------------------------------------------
+       For devices >= 768px wide (desktops/laptops), fill entire screen:
+       - Remove scroll and margins
+       - Let .container fill 100vw x 100vh
+       - Scale everything up to 1.0 (i.e. no extra space left/right/bottom)
+       - If it overflows on certain screens, try transform: scale(0.98) or 0.95
+       ------------------------------------------------------------------ */
     @media (min-width: 768px) {
       html, body {
+        margin: 0 !important; 
+        padding: 0 !important;
         overflow: hidden !important;
       }
       .container {
-        transform: scale(0.8);
-        transform-origin: top center;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100vw;
+        height: 100vh;
+        transform: scale(1); /* Adjust if needed (e.g. 0.97 or 0.99) */
+        transform-origin: top left;
+        /* remove any leftover */
       }
       .year-grid {
         overflow: hidden !important;
+        /* 
+          Ensures the grid doesn't cause scroll 
+          Fill exactly what's left after .top-bar:
+        */
+        height: calc(100vh - 2.5rem) !important; 
+      }
+      .top-bar {
+        margin-bottom: 0 !important;
       }
     }
   </style>
