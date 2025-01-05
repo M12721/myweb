@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>QQQ</title>
+  <title>Responsive CS Curriculum</title>
   <style>
     :root {
       --gray-50: #fafafa;
@@ -133,6 +133,7 @@
       align-items: start;
       padding-bottom: 0.25rem;
       overflow-y: auto; /* Allow vertical scrolling */
+      height: 100%; /* Ensure full height to prevent empty space */
     }
 
     .year-block {
@@ -268,10 +269,10 @@
     /* Phones */
     @media (max-width: 640px) {
       .year-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Allow more columns on small screens */
+        grid-template-columns: repeat(2, 1fr); /* Set to 2 columns on phones */
       }
       .course-grid {
-        grid-template-columns: repeat(2, 1fr); /* Revert to original grid with 4 courses per row on phone */
+        grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns within term */
       }
       .course-card {
         min-height: 3.5rem;
@@ -291,7 +292,7 @@
     /* Very small phones */
     @media (max-width: 380px) {
       .year-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Allow more columns on very small screens */
+        grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns on very small screens */
       }
       .course-grid {
         grid-template-columns: repeat(2, 1fr); /* Maintain 2 columns */
@@ -893,3 +894,4 @@
   </script>
 </body>
 </html>
+
