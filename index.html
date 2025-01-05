@@ -97,7 +97,7 @@
     }
 
     .legend-text {
-      font-size: 0.65rem;
+      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
       font-weight: 500;
       color: var(--gray-600);
     }
@@ -112,7 +112,7 @@
       display: flex;
       align-items: center;
       gap: 0.25rem;
-      font-size: 0.65rem;
+      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
       color: var(--gray-600);
     }
 
@@ -278,7 +278,7 @@
       }
     }
 
-    @media (max-width: 660px) {
+    @media (max-width: 700px) {
       .title::after {
         content: "CS 24/25 Plan";
       }
