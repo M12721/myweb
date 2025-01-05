@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Responsive CS Curriculum</title>
+  <title>POL</title>
   <style>
     :root {
       --gray-50: #fafafa;
@@ -39,12 +39,12 @@
     }
 
     .container {
-      height: 100vh;
       display: flex;
       flex-direction: column;
+      height: 100vh;
+      width: 100vw;
       padding: 0.25rem;
-      max-width: 100%;
-      margin: 0 auto;
+      margin: 0;
     }
 
     .top-bar {
@@ -52,13 +52,11 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.25rem;
-      height: 2.5rem;
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      height: 3rem;
       background: rgba(255,255,255,0.9);
       backdrop-filter: blur(8px);
-      margin-bottom: 0.25rem;
+      z-index: 20;
+      flex-shrink: 0;
     }
 
     .title {
@@ -72,7 +70,7 @@
       text-overflow: ellipsis;
       max-width: 50%;
       position: relative;
-      left: 17.5%;
+      left: 0;
     }
 
     .title::after {
@@ -91,7 +89,8 @@
       padding: 0.25rem 0.5rem;
       min-width: fit-content;
       position: relative;
-      right: 17.5%;
+      right: 0;
+      flex-shrink: 0;
     }
 
     .legend-text {
@@ -126,10 +125,10 @@
       display: grid;
       gap: 0.25rem;
       flex: 1;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       align-items: start;
-      height: calc(100vh - 3rem); /* 2.5rem top-bar + 0.25rem margin-bot + a bit of buffer */
       overflow: hidden;
+      padding-bottom: 0.25rem;
     }
 
     .year-block {
@@ -233,49 +232,34 @@
     .ring-2-amber { box-shadow: 0 0 0 2px var(--amber-400) !important; }
     .bg-emerald-50 { background-color: var(--emerald-50) !important; }
     .ring-2-emerald { box-shadow: 0 0 0 2px var(--emerald-400) !important; }
-    
-    /* Target iPads (including Mini, Air, and Pro models) */
-    @media (min-width: 768px) and (max-width: 1366px) and (hover: none) and (pointer: coarse) {
-      html, body {
-        overflow-y: auto; /* original for iPads to enable scrolling if needed */
-        overflow-x: hidden;
-      }
-      .container {
-        min-height: auto;
-      }
+
+    /* Media Queries for Responsiveness */
+
+    /* Tablets and small desktops */
+    @media (min-width: 768px) and (max-width: 1024px) {
       .year-grid {
-        min-height: auto;
-        overflow-y: auto;
-      }
-      .year-block {
-        overflow-y: hidden;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       }
     }
 
+    /* Large desktops */
+    @media (min-width: 1025px) {
+      .year-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+    }
+
+    /* Phones */
     @media (max-width: 640px) {
       .year-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
       }
       .course-card {
         min-height: 3.5rem;
       }
     }
 
-    @media (max-width: 1366px) {
-      .year-grid {
-        min-height: auto;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .title::after {
-        content: "CS 24/25 Plan";
-      }
-      .legend-bubble {
-        right: 0%;
-      }
-    }
-
+    /* Very small phones */
     @media (max-width: 380px) {
       .year-grid {
         grid-template-columns: 1fr;
@@ -292,604 +276,588 @@
       }
     }
 
+    /* Adjustments for iPads and similar devices */
+    @media (min-width: 768px) and (max-width: 1366px) and (hover: none) and (pointer: coarse) {
+      html, body {
+        overflow-y: auto; /* Enable scrolling if necessary */
+        overflow-x: hidden;
+      }
+      .container {
+        min-height: auto;
+      }
+      .year-grid {
+        min-height: auto;
+        overflow-y: auto;
+      }
+      .year-block {
+        overflow-y: hidden;
+      }
+    }
+
+    /* Ensuring container padding for safe areas */
     @supports (padding: max(0px)) {
       .container {
         padding-left: max(0.25rem, env(safe-area-inset-left));
         padding-right: max(0.25rem, env(safe-area-inset-right));
       }
     }
-
-    /* ------------------------------------------------------------------
-       For devices >= 768px wide (desktops/laptops), fill entire screen:
-       - Remove scroll and margins
-       - Let .container fill 100vw x 100vh
-       - Scale everything up to 1.0 (i.e. no extra space left/right/bottom)
-       - If it overflows on certain screens, try transform: scale(0.98) or 0.95
-       ------------------------------------------------------------------ */
-    @media (min-width: 768px) {
-      html, body {
-        margin: 0 !important; 
-        padding: 0 !important;
-        overflow: hidden !important;
-      }
-      .container {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100vw;
-        height: 100vh;
-        transform: scale(1); /* Adjust if needed (e.g. 0.97 or 0.99) */
-        transform-origin: top left;
-        /* remove any leftover */
-      }
-      .year-grid {
-        overflow: hidden !important;
-        /* 
-          Ensures the grid doesn't cause scroll 
-          Fill exactly what's left after .top-bar:
-        */
-        height: calc(100vh - 2.5rem) !important; 
-      }
-      .top-bar {
-        margin-bottom: 0 !important;
-      }
-    }
   </style>
 </head>
 <body>
-<!-- Rest of your HTML and JavaScript code remains exactly the same -->
-<div class="container">
-  <div class="top-bar">
-    <h1 class="title"></h1>
-    <div id="legend" class="legend-bubble">
-      <div id="legend-selected" class="legend-text">
-        Hover over any course
-      </div>
-      <div class="legend-colors">
-        <div class="legend-item">
-          <div class="legend-dot dot-amber"></div>
-          <span>Prerequisites</span>
+  <!-- HTML Structure -->
+  <div class="container">
+    <div class="top-bar">
+      <h1 class="title"></h1>
+      <div id="legend" class="legend-bubble">
+        <div id="legend-selected" class="legend-text">
+          Hover over any course
         </div>
-        <div class="legend-item">
-          <div class="legend-dot dot-emerald"></div>
-          <span>Unlocks</span>
+        <div class="legend-colors">
+          <div class="legend-item">
+            <div class="legend-dot dot-amber"></div>
+            <span>Prerequisites</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot dot-emerald"></div>
+            <span>Unlocks</span>
+          </div>
         </div>
       </div>
     </div>
+
+    <div id="app"></div>
   </div>
 
-  <div id="app"></div>
-</div>
+  <script>
+    /*
+      EXACT SAME LOGIC & DATA
+      Hover vs. click toggling, etc.
+    */
 
-<script>
-  /*
-    EXACT SAME LOGIC & DATA
-    Hover vs. click toggling, etc.
-  */
+    // -----------------------------------------------------------
+    // How courses unlock each other (prerequisites and successors)
+    // -----------------------------------------------------------
+    const courseRelationships = {
+      // ----------------
+      //     First Year
+      // ----------------
+      'COSC 114': {
+        prereqs: [],
+        unlocks: ['COSC 101', 'ECCE 230']
+      },
+      'COSC 101': {
+        prereqs: ['COSC 114'],
+        unlocks: ['COSC 201', 'COSC 301']
+      },
+      'MATH 111': {
+        prereqs: [],
+        unlocks: ['MATH 112']
+      },
+      'MATH 112': {
+        prereqs: ['MATH 111'],
+        unlocks: ['MATH 204', 'MATH 232', 'MATH 234', 'MATH 242', 'MATH 214']
+      },
+      'ENGL 101': {
+        prereqs: [],
+        unlocks: ['ENGL 102']
+      },
+      'ENGL 102': {
+        prereqs: ['ENGL 101'],
+        unlocks: []
+      },
+      'CHEM 115': {
+        prereqs: [],
+        unlocks: []
+      },
+      'PHYS 121': {
+        prereqs: ['MATH 111'],
+        unlocks: []
+      },
+      'GENS 101': {
+        prereqs: [],
+        unlocks: []
+      },
+      'GENS 100': {
+        prereqs: [],
+        unlocks: ['GENS 300']
+      },
+      'HUMA XXX (Islamic/Arabic)': {
+        prereqs: [],
+        unlocks: []
+      },
 
-  // -----------------------------------------------------------
-  // How courses unlock each other (prerequisites and successors)
-  // -----------------------------------------------------------
-  const courseRelationships = {
-    // ----------------
-    //     First Year
-    // ----------------
-    'COSC 114': {
-      prereqs: [],
-      unlocks: ['COSC 101', 'ECCE 230']
-    },
-    'COSC 101': {
-      prereqs: ['COSC 114'],
-      unlocks: ['COSC 201', 'COSC 301']
-    },
-    'MATH 111': {
-      prereqs: [],
-      unlocks: ['MATH 112']
-    },
-    'MATH 112': {
-      prereqs: ['MATH 111'],
-      unlocks: ['MATH 204', 'MATH 232', 'MATH 234', 'MATH 242', 'MATH 214']
-    },
-    'ENGL 101': {
-      prereqs: [],
-      unlocks: ['ENGL 102']
-    },
-    'ENGL 102': {
-      prereqs: ['ENGL 101'],
-      unlocks: []
-    },
-    'CHEM 115': {
-      prereqs: [],
-      unlocks: []
-    },
-    'PHYS 121': {
-      prereqs: ['MATH 111'],
-      unlocks: []
-    },
-    'GENS 101': {
-      prereqs: [],
-      unlocks: []
-    },
-    'GENS 100': {
-      prereqs: [],
-      unlocks: ['GENS 300']
-    },
-    'HUMA XXX (Islamic/Arabic)': {
-      prereqs: [],
-      unlocks: []
-    },
+      // ----------------
+      //    Second Year
+      // ----------------
+      'ECCE 230': {
+        prereqs: ['COSC 114'],
+        unlocks: ['MATH 232', 'COSC 310', 'ECCE 336']
+      },
+      'COSC 201': {
+        prereqs: ['COSC 101'],
+        unlocks: ['ECCE 354', 'ECCE 356']
+      },
+      'MATH 204': {
+        prereqs: ['MATH 112'],
+        unlocks: ['MATH 214']
+      },
+      'MATH 234': {
+        prereqs: ['MATH 112'],
+        unlocks: ['COSC 301']
+      },
+      'MATH 242': {
+        prereqs: ['MATH 112'],
+        unlocks: ['MATH 214']
+      },
+      'MATH 232': {
+        prereqs: ['ECCE 230'],
+        unlocks: []
+      },
+      'MATH 214': {
+        prereqs: ['MATH 242', 'MATH 204', 'COSC 114'],
+        unlocks: []
+      },
+      'ECCE 336': {
+        prereqs: ['ECCE 230'],
+        unlocks: ['ECCE 434']
+      },
+      'COSC 310': {
+        prereqs: ['ECCE 230'],
+        unlocks: ['COSC 312']
+      },
+      'ENGR 202': {
+        prereqs: ['COSC 114'],
+        unlocks: []
+      },
+      'HUMA 105/106 (UAE Studies)': {
+        prereqs: [],
+        unlocks: []
+      },
 
-    // ----------------
-    //    Second Year
-    // ----------------
-    'ECCE 230': {
-      prereqs: ['COSC 114'],
-      unlocks: ['MATH 232', 'COSC 310', 'ECCE 336']
-    },
-    'COSC 201': {
-      prereqs: ['COSC 101'],
-      unlocks: ['ECCE 354', 'ECCE 356']
-    },
-    'MATH 204': {
-      prereqs: ['MATH 112'],
-      unlocks: ['MATH 214']
-    },
-    'MATH 234': {
-      prereqs: ['MATH 112'],
-      unlocks: ['COSC 301']
-    },
-    'MATH 242': {
-      prereqs: ['MATH 112'],
-      unlocks: ['MATH 214']
-    },
-    'MATH 232': {
-      prereqs: ['ECCE 230'],
-      unlocks: []
-    },
-    'MATH 214': {
-      prereqs: ['MATH 242', 'MATH 204', 'COSC 114'],
-      unlocks: []
-    },
-    'ECCE 336': {
-      prereqs: ['ECCE 230'],
-      unlocks: ['ECCE 434']
-    },
-    'COSC 310': {
-      prereqs: ['ECCE 230'],
-      unlocks: ['COSC 312']
-    },
-    'ENGR 202': {
-      prereqs: ['COSC 114'],
-      unlocks: []
-    },
-    'HUMA 105/106 (UAE Studies)': {
-      prereqs: [],
-      unlocks: []
-    },
+      // ----------------
+      //     Third Year
+      // ----------------
+      'BUSS 322': {
+        prereqs: [],
+        unlocks: []
+      },
+      'COSC 301': {
+        prereqs: ['COSC 101', 'MATH 234'],
+        unlocks: ['COSC 312', 'COSC 320']
+      },
+      'ECCE 354': {
+        prereqs: ['COSC 201'],
+        unlocks: ['COSC 340']
+      },
+      'COSC 320': {
+        prereqs: ['COSC 301'],
+        unlocks: []
+      },
+      'COSC 312': {
+        prereqs: ['COSC 310', 'COSC 301'],
+        unlocks: ['COSC 497']
+      },
+      'COSC 330': {
+        prereqs: ['ECCE 230'],
+        unlocks: []
+      },
+      'COSC 340': {
+        prereqs: ['ECCE 354'],
+        unlocks: []
+      },
+      'ECCE 356': {
+        prereqs: ['COSC 201'],
+        unlocks: []
+      },
+      'GENS 300': {
+        prereqs: ['GENS 100'],
+        unlocks: ['GENS 400']
+      },
+      'ECCE 434': {
+        prereqs: ['ECCE 336'],
+        unlocks: []
+      },
 
-    // ----------------
-    //     Third Year
-    // ----------------
-    'BUSS 322': {
-      prereqs: [],
-      unlocks: []
-    },
-    'COSC 301': {
-      prereqs: ['COSC 101', 'MATH 234'],
-      unlocks: ['COSC 312', 'COSC 320']
-    },
-    'ECCE 354': {
-      prereqs: ['COSC 201'],
-      unlocks: ['COSC 340']
-    },
-    'COSC 320': {
-      prereqs: ['COSC 301'],
-      unlocks: []
-    },
-    'COSC 312': {
-      prereqs: ['COSC 310', 'COSC 301'],
-      unlocks: ['COSC 497']
-    },
-    'COSC 330': {
-      prereqs: ['ECCE 230'],
-      unlocks: []
-    },
-    'COSC 340': {
-      prereqs: ['ECCE 354'],
-      unlocks: []
-    },
-    'ECCE 356': {
-      prereqs: ['COSC 201'],
-      unlocks: []
-    },
-    'GENS 300': {
-      prereqs: ['GENS 100'],
-      unlocks: ['GENS 400']
-    },
-    'ECCE 434': {
-      prereqs: ['ECCE 336'],
-      unlocks: []
-    },
+      // ----------------
+      //    Fourth Year
+      // ----------------
+      'COSC 497': {
+        prereqs: ['COSC 312'],
+        unlocks: ['COSC 498']
+      },
+      'COSC 498': {
+        prereqs: ['COSC 497'],
+        unlocks: []
+      },
+      'BUSS XXX': {
+        prereqs: [],
+        unlocks: []
+      },
+      'GENS 400': {
+        prereqs: ['GENS 300'],
+        unlocks: []
+      },
+      'TECHNICAL ELECTIVE': {
+        prereqs: [],
+        unlocks: []
+      },
+      'ENGR 399': {
+        prereqs: [],
+        unlocks: []
+      }
+    };
 
-    // ----------------
-    //    Fourth Year
-    // ----------------
-    'COSC 497': {
-      prereqs: ['COSC 312'],
-      unlocks: ['COSC 498']
-    },
-    'COSC 498': {
-      prereqs: ['COSC 497'],
-      unlocks: []
-    },
-    'BUSS XXX': {
-      prereqs: [],
-      unlocks: []
-    },
-    'GENS 400': {
-      prereqs: ['GENS 300'],
-      unlocks: []
-    },
-    'TECHNICAL ELECTIVE': {
-      prereqs: [],
-      unlocks: []
-    },
-    'ENGR 399': {
-      prereqs: [],
-      unlocks: []
-    }
-  };
+    // -----------------------------------------------
+    // Full semester-by-semester layout (the curriculum)
+    // -----------------------------------------------
+    const curriculum = {
+      Freshman: {
+        Fall: [
+          { code: 'GENS 101', name: 'Grand Challenges', credits: 4 },
+          { code: 'ENGL 101', name: 'Academic English I', credits: 3 },
+          { code: 'MATH 111', name: 'Calculus I', credits: 4 },
+          { code: 'CHEM 115', name: 'General Chemistry I', credits: 4 },
+          { code: 'GENS 100', name: 'Academic Development & Success', credits: 1 }
+        ],
+        Spring: [
+          { code: 'ENGL 102', name: 'Academic English II', credits: 3 },
+          { code: 'MATH 112', name: 'Calculus II', credits: 4 },
+          { code: 'PHYS 121', name: 'University Physics I', credits: 4 },
+          { code: 'COSC 114', name: 'Introduction to Computing Using Python', credits: 4 },
+          {
+            code: 'HUMA/BUSS XXX',
+            name: 'Any HUMA/BUSS Elective',
+            credits: 3
+          }
+        ],
+        Summer: [
+          {
+            code: 'HUMA/BUSS XXX',
+            name: 'Any HUMA/BUSS Elective',
+            credits: 3
+          }
+        ]
+      },
 
-  // -----------------------------------------------
-  // Full semester-by-semester layout (the curriculum)
-  // -----------------------------------------------
-  const curriculum = {
-    Freshman: {
-      Fall: [
-        { code: 'GENS 101', name: 'Grand Challenges', credits: 4 },
-        { code: 'ENGL 101', name: 'Academic English I', credits: 3 },
-        { code: 'MATH 111', name: 'Calculus I', credits: 4 },
-        { code: 'CHEM 115', name: 'General Chemistry I', credits: 4 },
-        { code: 'GENS 100', name: 'Academic Development & Success', credits: 1 }
-      ],
-      Spring: [
-        { code: 'ENGL 102', name: 'Academic English II', credits: 3 },
-        { code: 'MATH 112', name: 'Calculus II', credits: 4 },
-        { code: 'PHYS 121', name: 'University Physics I', credits: 4 },
-        { code: 'COSC 114', name: 'Introduction to Computing Using Python', credits: 4 },
-        {
-          code: 'HUMA/BUSS XXX',
-          name: 'Any HUMA/BUSS Elective',
-          credits: 3
+      Sophomore: {
+        Fall: [
+          { code: 'COSC 101', name: 'Foundations of Computer Science', credits: 3 },
+          { code: 'ECCE 230', name: 'Object-Oriented Programming', credits: 4 },
+          { code: 'MATH 204', name: 'Linear Algebra', credits: 3 },
+          {
+            code: 'MATH 242',
+            name: 'Introduction to Probability and Statistics',
+            credits: 3
+          },
+          { code: 'ENGR 202', name: 'Data Science & AI', credits: 3 }
+        ],
+        Spring: [
+          {
+            code: 'COSC 201',
+            name: 'Computer Systems Organization',
+            credits: 3
+          },
+          {
+            code: 'COSC 310',
+            name: 'Data Structure and Algorithms',
+            credits: 3
+          },
+          { code: 'MATH 232', name: 'Engineering Mathematics', credits: 3 },
+          {
+            code: 'MATH 214',
+            name: 'Mathematical and Statistical Software',
+            credits: 3
+          },
+          { code: 'MATH 234', name: 'Discrete Mathematics', credits: 3 }
+        ],
+        Summer: [
+          {
+            code: 'HUMA 105/106',
+            name: 'UAE Studies Elective',
+            credits: 3
+          }
+        ]
+      },
+
+      Junior: {
+        Fall: [
+          {
+            code: 'BUSS 322',
+            name: 'Fundamentals of Innovation and Entrepreneurship',
+            credits: 3
+          },
+          {
+            code: 'COSC 301',
+            name: 'Automata, Computability and Complexity',
+            credits: 3
+          },
+          {
+            code: 'ECCE 336',
+            name: 'Introduction to Software Engineering',
+            credits: 3
+          },
+          {
+            code: 'ECCE 354',
+            name: 'Operating Systems',
+            credits: 3
+          },
+          {
+            code: 'ECCE 356',
+            name: 'Computer Networks',
+            credits: 4
+          }
+        ],
+        Spring: [
+          {
+            code: 'COSC 312',
+            name: 'Design and Analysis of Algorithms',
+            credits: 3
+          },
+          {
+            code: 'COSC 320',
+            name: 'Principles of Programming Languages',
+            credits: 3
+          },
+          {
+            code: 'COSC 330',
+            name: 'Introduction to Artificial Intelligence',
+            credits: 3
+          },
+          {
+            code: 'COSC 340',
+            name: 'Introduction to Computer Security',
+            credits: 3
+          },
+          {
+            code: 'GENS 300',
+            name: 'Career Preparation',
+            credits: 1
+          }
+        ],
+        Summer: [
+          {
+            code: 'ENGR 399',
+            name: 'Internship',
+            credits: 1
+          }
+        ]
+      },
+
+      Senior: {
+        Fall: [
+          {
+            code: 'ECCE 434',
+            name: 'Database Systems',
+            credits: 3
+          },
+          {
+            code: 'COSC 497',
+            name: 'Senior Design Project I',
+            credits: 3
+          },
+          {
+            code: 'Technical Elective',
+            name: 'Technical Elective Course',
+            credits: 3
+          },
+          {
+            code: 'Technical Elective',
+            name: 'Technical Elective Course',
+            credits: 3
+          },
+          {
+            code: 'Technical Elective',
+            name: 'Technical Elective Course',
+            credits: 3
+          }
+        ],
+        Spring: [
+          {
+            code: 'COSC 498',
+            name: 'Senior Design Project II',
+            credits: 3
+          },
+          {
+            code: 'Technical Elective',
+            name: 'Technical Elective Course',
+            credits: 3
+          },
+          {
+            code: 'Technical Elective',
+            name: 'Technical Elective Course',
+            credits: 3
+          },
+          {
+            code: 'Technical Elective',
+            name: 'Technical Elective Course',
+            credits: 3
+          },
+          {
+            code: 'GENS 400',
+            name: 'Enhancing Employability & Job Readiness',
+            credits: 1
+          }
+        ],
+        Summer: [
+          {
+            code: 'ENGR 399',
+            name: 'Internship',
+            credits: 1
+          }
+        ]
+      }
+    };
+
+    let hoveredCode = null;
+    let clickedCode = null;
+
+    function renderApp() {
+      const app = document.getElementById('app');
+      // Clear
+      while (app.firstChild) {
+        app.removeChild(app.firstChild);
+      }
+
+      // Outer container for the years
+      const yearGrid = document.createElement('div');
+      yearGrid.className = "year-grid";
+      app.appendChild(yearGrid);
+
+      // MOUSEMOVE => handle hover if not locked
+      yearGrid.addEventListener('mousemove', e => {
+        if (!clickedCode) {
+          const card = e.target.closest('.course-card');
+          if (card) {
+            const code = card.getAttribute('data-code');
+            if (code !== hoveredCode) {
+              hoveredCode = code;
+              renderApp();
+            }
+          } else if (hoveredCode) {
+            hoveredCode = null;
+            renderApp();
+          }
         }
-      ],
-      Summer: [
-        {
-          code: 'HUMA/BUSS XXX',
-          name: 'Any HUMA/BUSS Elective',
-          credits: 3
-        }
-      ]
-    },
+      });
 
-    Sophomore: {
-      Fall: [
-        { code: 'COSC 101', name: 'Foundations of Computer Science', credits: 3 },
-        { code: 'ECCE 230', name: 'Object-Oriented Programming', credits: 4 },
-        { code: 'MATH 204', name: 'Linear Algebra', credits: 3 },
-        {
-          code: 'MATH 242',
-          name: 'Introduction to Probability and Statistics',
-          credits: 3
-        },
-        { code: 'ENGR 202', name: 'Data Science & AI', credits: 3 }
-      ],
-      Spring: [
-        {
-          code: 'COSC 201',
-          name: 'Computer Systems Organization',
-          credits: 3
-        },
-        {
-          code: 'COSC 310',
-          name: 'Data Structure and Algorithms',
-          credits: 3
-        },
-        { code: 'MATH 232', name: 'Engineering Mathematics', credits: 3 },
-        {
-          code: 'MATH 214',
-          name: 'Mathematical and Statistical Software',
-          credits: 3
-        },
-        { code: 'MATH 234', name: 'Discrete Mathematics', credits: 3 }
-      ],
-      Summer: [
-        {
-          code: 'HUMA 105/106',
-          name: 'UAE Studies Elective',
-          credits: 3
-        }
-      ]
-    },
-
-    Junior: {
-      Fall: [
-        {
-          code: 'BUSS 322',
-          name: 'Fundamentals of Innovation and Entrepreneurship',
-          credits: 3
-        },
-        {
-          code: 'COSC 301',
-          name: 'Automata, Computability and Complexity',
-          credits: 3
-        },
-        {
-          code: 'ECCE 336',
-          name: 'Introduction to Software Engineering',
-          credits: 3
-        },
-        {
-          code: 'ECCE 354',
-          name: 'Operating Systems',
-          credits: 3
-        },
-        {
-          code: 'ECCE 356',
-          name: 'Computer Networks',
-          credits: 4
-        }
-      ],
-      Spring: [
-        {
-          code: 'COSC 312',
-          name: 'Design and Analysis of Algorithms',
-          credits: 3
-        },
-        {
-          code: 'COSC 320',
-          name: 'Principles of Programming Languages',
-          credits: 3
-        },
-        {
-          code: 'COSC 330',
-          name: 'Introduction to Artificial Intelligence',
-          credits: 3
-        },
-        {
-          code: 'COSC 340',
-          name: 'Introduction to Computer Security',
-          credits: 3
-        },
-        {
-          code: 'GENS 300',
-          name: 'Career Preparation',
-          credits: 1
-        }
-      ],
-      Summer: [
-        {
-          code: 'ENGR 399',
-          name: 'Internship',
-          credits: 1
-        }
-      ]
-    },
-
-    Senior: {
-      Fall: [
-        {
-          code: 'ECCE 434',
-          name: 'Database Systems',
-          credits: 3
-        },
-        {
-          code: 'COSC 497',
-          name: 'Senior Design Project I',
-          credits: 3
-        },
-        {
-          code: 'Technical Elective',
-          name: 'Technical Elective Course',
-          credits: 3
-        },
-        {
-          code: 'Technical Elective',
-          name: 'Technical Elective Course',
-          credits: 3
-        },
-        {
-          code: 'Technical Elective',
-          name: 'Technical Elective Course',
-          credits: 3
-        }
-      ],
-      Spring: [
-        {
-          code: 'COSC 498',
-          name: 'Senior Design Project II',
-          credits: 3
-        },
-        {
-          code: 'Technical Elective',
-          name: 'Technical Elective Course',
-          credits: 3
-        },
-        {
-          code: 'Technical Elective',
-          name: 'Technical Elective Course',
-          credits: 3
-        },
-        {
-          code: 'Technical Elective',
-          name: 'Technical Elective Course',
-          credits: 3
-        },
-        {
-          code: 'GENS 400',
-          name: 'Enhancing Employability & Job Readiness',
-          credits: 1
-        }
-      ],
-      Summer: [
-        {
-          code: 'ENGR 399',
-          name: 'Internship',
-          credits: 1
-        }
-      ]
-    }
-  };
-
-  let hoveredCode = null;
-  let clickedCode = null;
-
-  function renderApp() {
-    const app = document.getElementById('app');
-    // Clear
-    while (app.firstChild) {
-      app.removeChild(app.firstChild);
-    }
-
-    // Outer container for the years
-    const yearGrid = document.createElement('div');
-    yearGrid.className = "year-grid";
-    app.appendChild(yearGrid);
-
-    // MOUSEMOVE => handle hover if not locked
-    yearGrid.addEventListener('mousemove', e => {
-      if (!clickedCode) {
+      // CLICK => toggle highlight or clear if empty space
+      yearGrid.addEventListener('click', e => {
         const card = e.target.closest('.course-card');
         if (card) {
           const code = card.getAttribute('data-code');
-          if (code !== hoveredCode) {
-            hoveredCode = code;
-            renderApp();
+          // if same code => unselect
+          if (clickedCode === code) {
+            clickedCode = null;
+            hoveredCode = null;
+          } else {
+            clickedCode = code;
           }
-        } else if (hoveredCode) {
-          hoveredCode = null;
-          renderApp();
-        }
-      }
-    });
-
-    // CLICK => toggle highlight or clear if empty space
-    yearGrid.addEventListener('click', e => {
-      const card = e.target.closest('.course-card');
-      if (card) {
-        const code = card.getAttribute('data-code');
-        // if same code => unselect
-        if (clickedCode === code) {
+        } else {
+          // empty space => clear
           clickedCode = null;
           hoveredCode = null;
-        } else {
-          clickedCode = code;
         }
-      } else {
-        // empty space => clear
-        clickedCode = null;
-        hoveredCode = null;
-      }
-      renderApp();
-    });
-
-    // Build each year block
-    Object.entries(curriculum).forEach(([yearName, terms]) => {
-      const yearDiv = document.createElement('div');
-      yearDiv.className = "year-block";
-
-      const yearTitle = document.createElement('h2');
-      yearTitle.className = "year-title";
-      yearTitle.textContent = yearName;
-      yearDiv.appendChild(yearTitle);
-
-      // terms
-      Object.entries(terms).forEach(([termName, courses]) => {
-        const termDiv = document.createElement('div');
-        termDiv.className = "term";
-
-        const termTitle = document.createElement('h3');
-        termTitle.className = "term-title";
-        termTitle.textContent = termName;
-        termDiv.appendChild(termTitle);
-
-        const courseGrid = document.createElement('div');
-        courseGrid.className = "course-grid";
-
-        courses.forEach(course => {
-          const cardDiv = document.createElement('div');
-          cardDiv.className = "course-card";
-          cardDiv.setAttribute('data-code', course.code);
-
-          const isSelected = getSelectedCode() === course.code;
-          const highlightClasses = buildHighlightClasses(course.code, isSelected);
-          highlightClasses.forEach(c => cardDiv.classList.add(c));
-
-          // content
-          const codeDiv = document.createElement('div');
-          codeDiv.className = "course-code";
-          codeDiv.textContent = course.code;
-
-          const nameDiv = document.createElement('div');
-          nameDiv.className = "course-name";
-          nameDiv.textContent = course.name;
-
-          const creditsDiv = document.createElement('div');
-          creditsDiv.className = "course-credits";
-          creditsDiv.textContent = course.credits + "cr";
-
-          cardDiv.appendChild(codeDiv);
-          cardDiv.appendChild(nameDiv);
-          cardDiv.appendChild(creditsDiv);
-
-          courseGrid.appendChild(cardDiv);
-        });
-
-        termDiv.appendChild(courseGrid);
-        yearDiv.appendChild(termDiv);
+        renderApp();
       });
 
-      yearGrid.appendChild(yearDiv);
-    });
+      // Build each year block
+      Object.entries(curriculum).forEach(([yearName, terms]) => {
+        const yearDiv = document.createElement('div');
+        yearDiv.className = "year-block";
 
-    updateLegend();
-  }
+        const yearTitle = document.createElement('h2');
+        yearTitle.className = "year-title";
+        yearTitle.textContent = yearName;
+        yearDiv.appendChild(yearTitle);
 
-  function getSelectedCode() {
-    return clickedCode || hoveredCode;
-  }
+        // terms
+        Object.entries(terms).forEach(([termName, courses]) => {
+          const termDiv = document.createElement('div');
+          termDiv.className = "term";
 
-  function buildHighlightClasses(courseCode, isSelected) {
-    const classes = ["bg-white"];
-    const sc = getSelectedCode();
-    if (sc) {
-      if (isSelected) {
-        classes.push("bg-indigo-100", "ring-2-indigo");
-      } else if (courseRelationships[sc]) {
-        const { prereqs, unlocks } = courseRelationships[sc];
-        if (prereqs.includes(courseCode)) {
-          classes.push("bg-amber-50", "ring-2-amber");
-        } else if (unlocks.includes(courseCode)) {
-          classes.push("bg-emerald-50", "ring-2-emerald");
+          const termTitle = document.createElement('h3');
+          termTitle.className = "term-title";
+          termTitle.textContent = termName;
+          termDiv.appendChild(termTitle);
+
+          const courseGrid = document.createElement('div');
+          courseGrid.className = "course-grid";
+
+          courses.forEach(course => {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = "course-card";
+            cardDiv.setAttribute('data-code', course.code);
+
+            const isSelected = getSelectedCode() === course.code;
+            const highlightClasses = buildHighlightClasses(course.code, isSelected);
+            highlightClasses.forEach(c => cardDiv.classList.add(c));
+
+            // content
+            const codeDiv = document.createElement('div');
+            codeDiv.className = "course-code";
+            codeDiv.textContent = course.code;
+
+            const nameDiv = document.createElement('div');
+            nameDiv.className = "course-name";
+            nameDiv.textContent = course.name;
+
+            const creditsDiv = document.createElement('div');
+            creditsDiv.className = "course-credits";
+            creditsDiv.textContent = course.credits + "cr";
+
+            cardDiv.appendChild(codeDiv);
+            cardDiv.appendChild(nameDiv);
+            cardDiv.appendChild(creditsDiv);
+
+            courseGrid.appendChild(cardDiv);
+          });
+
+          termDiv.appendChild(courseGrid);
+          yearDiv.appendChild(termDiv);
+        });
+
+        yearGrid.appendChild(yearDiv);
+      });
+
+      updateLegend();
+    }
+
+    function getSelectedCode() {
+      return clickedCode || hoveredCode;
+    }
+
+    function buildHighlightClasses(courseCode, isSelected) {
+      const classes = ["bg-white"];
+      const sc = getSelectedCode();
+      if (sc) {
+        if (isSelected) {
+          classes.push("bg-indigo-100", "ring-2-indigo");
+        } else if (courseRelationships[sc]) {
+          const { prereqs, unlocks } = courseRelationships[sc];
+          if (prereqs.includes(courseCode)) {
+            classes.push("bg-amber-50", "ring-2-amber");
+          } else if (unlocks.includes(courseCode)) {
+            classes.push("bg-emerald-50", "ring-2-emerald");
+          }
         }
       }
+      return classes;
     }
-    return classes;
-  }
 
-  function updateLegend() {
-    const legend = document.getElementById('legend');
-    const legendSelected = document.getElementById('legend-selected');
-    const sc = getSelectedCode();
-    if (sc) {
-      legendSelected.textContent = `Selected: ${sc}`;
-    } else {
-      legendSelected.textContent = "Hover over any course";
+    function updateLegend() {
+      const legend = document.getElementById('legend');
+      const legendSelected = document.getElementById('legend-selected');
+      const sc = getSelectedCode();
+      if (sc) {
+        legendSelected.textContent = `Selected: ${sc}`;
+      } else {
+        legendSelected.textContent = "Hover over any course";
+      }
+      legend.classList.remove('hidden');
     }
-    legend.classList.remove('hidden');
-  }
 
-  // Initial
-  renderApp();
-</script>
+    // Initial Render
+    renderApp();
+  </script>
 </body>
 </html>
