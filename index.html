@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Responsive CS Curriculum</title>
+  <title>kop</title>
   <style>
     :root {
       --gray-50: #fafafa;
@@ -73,9 +73,7 @@
       max-width: 50%;
       position: relative;
       left: 17.5%;
-      
     }
-
 
     .title::after {
       content: "Computer Science 24/25 Plan";
@@ -159,7 +157,6 @@
       background: rgba(255,255,255,0.9);
       padding: 0.25rem 0;
       z-index: 10;
-      
     }
 
     .term {
@@ -221,7 +218,6 @@
       margin-bottom: 0.25rem;
     }
 
-
     .course-credits {
       position: absolute;
       bottom: 2px;
@@ -238,43 +234,40 @@
     .ring-2-amber { box-shadow: 0 0 0 2px var(--amber-400) !important; }
     .bg-emerald-50 { background-color: var(--emerald-50) !important; }
     .ring-2-emerald { box-shadow: 0 0 0 2px var(--emerald-400) !important; }
-    
-/* Target iPads (including Mini, Air, and Pro models) */
-    @media (min-width: 768px) and (max-width: 1366px) and (hover: none) and (pointer: coarse) {
-        html, body {
-            overflow-y: auto; /* Enable scrolling */
-            overflow-x: hidden; /* Prevent horizontal scrolling */
-        }
-    
-        .container {
-            min-height: auto; /* Let the container grow with content */
-        }
-    
-        .year-grid {
-            min-height: auto; /* Allow the grid to grow based on content */
-            overflow-y: auto; /* Enable scrolling within the grid */
-        }
-        .year-block {
-          overflow-y: hidden;
-        }
-    }
 
+    /* Target iPads (including Mini, Air, and Pro models) */
+    @media (min-width: 768px) and (max-width: 1366px) and (hover: none) and (pointer: coarse) {
+      html, body {
+        overflow-y: auto; /* Enable scrolling for iPads (original code) */
+        overflow-x: hidden;
+      }
+
+      .container {
+        min-height: auto; 
+      }
+
+      .year-grid {
+        min-height: auto; 
+        overflow-y: auto; 
+      }
+      .year-block {
+        overflow-y: hidden;
+      }
+    }
 
     @media (max-width: 640px) {
       .year-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-      
-    @media (max-width: 1366px) {
-        .year-grid {
-            min-height: auto; /* Allow the grid to grow with content */
-        }
-    }
-      
 
-      
       .course-card {
         min-height: 3.5rem;
+      }
+    } /* <-- close the 640px media query */
+
+    @media (max-width: 1366px) {
+      .year-grid {
+        min-height: auto; /* (original code) */
       }
     }
 
@@ -282,44 +275,54 @@
       .title::after {
         content: "CS 24/25 Plan";
       }
-      
+
       .legend-bubble {
         right: 0%;
       }
-      
-      
-      
     }
-
 
     @media (max-width: 380px) {
       .year-grid {
         grid-template-columns: 1fr;
       }
-      
+
       .title {
         display: none;
       }
-      
+
       .legend-bubble {
         position: relative;
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        
       }
-    
-
-      
-
-      
     }
 
     @supports (padding: max(0px)) {
       .container {
         padding-left: max(0.25rem, env(safe-area-inset-left));
         padding-right: max(0.25rem, env(safe-area-inset-right));
+      }
+    }
+
+    /* 
+      -------------------------------------------------------------------------
+      ADDITIONS BELOW: Force "fit on screen" for all devices >= 768px wide
+      (laptops, desktops, AND iPads) by removing scrolling and scaling down.
+      Adjust scale if needed (0.8 → 0.7, 0.85, etc.).
+      -------------------------------------------------------------------------
+    */
+    @media (min-width: 768px) {
+      html, body {
+        overflow: hidden !important;
+      }
+      .container {
+        transform: scale(0.8);
+        transform-origin: top center;
+      }
+      .year-grid {
+        overflow: hidden !important;
       }
     }
   </style>
@@ -355,36 +358,32 @@
     Hover vs. click toggling, etc.
   */
 
-// -----------------------------------------------------------
-// How courses unlock each other (prerequisites and successors)
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-// How courses unlock each other (prerequisites and successors)
-// -----------------------------------------------------------
+  // -----------------------------------------------------------
+  // How courses unlock each other (prerequisites and successors)
+  // -----------------------------------------------------------
   const courseRelationships = {
     // ----------------
     //     First Year
     // ----------------
     'COSC 114': {
       prereqs: [],
-      unlocks: ['COSC 101', 'ECCE 230'] // From the diagram: arrow from COSC 114 → COSC 101 and COSC 114 → ECCE 230
+      unlocks: ['COSC 101', 'ECCE 230']
     },
     'COSC 101': {
       prereqs: ['COSC 114'],
-      unlocks: ['COSC 201', 'COSC 301'] // Arrow from COSC 101 → COSC 201
+      unlocks: ['COSC 201', 'COSC 301']
     },
     'MATH 111': {
       prereqs: [],
-      unlocks: ['MATH 112'] // Arrow from MATH 111 → MATH 112
+      unlocks: ['MATH 112']
     },
     'MATH 112': {
       prereqs: ['MATH 111'],
-      // Diagram fans out from MATH 112 to multiple second-year math courses
       unlocks: ['MATH 204', 'MATH 232', 'MATH 234', 'MATH 242', 'MATH 214']
     },
     'ENGL 101': {
       prereqs: [],
-      unlocks: ['ENGL 102'] // Arrow from ENGL 101 → ENGL 102
+      unlocks: ['ENGL 102']
     },
     'ENGL 102': {
       prereqs: ['ENGL 101'],
@@ -406,24 +405,21 @@
       prereqs: [],
       unlocks: ['GENS 300']
     },
-    // Freshman-summer humanities elective
     'HUMA XXX (Islamic/Arabic)': {
       prereqs: [],
       unlocks: []
     },
-  
+
     // ----------------
     //    Second Year
     // ----------------
     'ECCE 230': {
       prereqs: ['COSC 114'],
-      unlocks: ['MATH 232', 'COSC 310', 'ECCE 336'] 
-      // From diagram: ECCE 230 → COSC 201, ECCE 230 → ECCE 342, ECCE 230 → ECCE 336
+      unlocks: ['MATH 232', 'COSC 310', 'ECCE 336']
     },
     'COSC 201': {
       prereqs: ['COSC 101'],
       unlocks: ['ECCE 354', 'ECCE 356']
-      // Arrows from COSC 201 → COSC 301, ECCE 354, COSC 320, ECCE 356
     },
     'MATH 204': {
       prereqs: ['MATH 112'],
@@ -447,22 +443,21 @@
     },
     'ECCE 336': {
       prereqs: ['ECCE 230'],
-      unlocks: ['ECCE 434'] // Arrow from ECCE 336 → COSC 497
+      unlocks: ['ECCE 434']
     },
     'COSC 310': {
       prereqs: ['ECCE 230'],
-      unlocks: ['COSC 312'] // Arrow from ECCE 342 → COSC 312
+      unlocks: ['COSC 312']
     },
     'ENGR 202': {
       prereqs: ['COSC 114'],
       unlocks: []
     },
-    // Sophomore-summer humanities elective
     'HUMA 105/106 (UAE Studies)': {
       prereqs: [],
       unlocks: []
     },
-  
+
     // ----------------
     //     Third Year
     // ----------------
@@ -480,7 +475,7 @@
     },
     'COSC 320': {
       prereqs: ['COSC 301'],
-      unlocks: [] // Diagram shows arrow from COSC 320 → COSC 498
+      unlocks: []
     },
     'COSC 312': {
       prereqs: ['COSC 310', 'COSC 301'],
@@ -506,13 +501,13 @@
       prereqs: ['ECCE 336'],
       unlocks: []
     },
-  
+
     // ----------------
     //    Fourth Year
     // ----------------
     'COSC 497': {
       prereqs: ['COSC 312'],
-      unlocks: ['COSC 498'] // Arrow from COSC 497 → COSC 498
+      unlocks: ['COSC 498']
     },
     'COSC 498': {
       prereqs: ['COSC 497'],
@@ -535,7 +530,7 @@
       unlocks: []
     }
   };
-  
+
   // -----------------------------------------------
   // Full semester-by-semester layout (the curriculum)
   // -----------------------------------------------
@@ -567,7 +562,7 @@
         }
       ]
     },
-  
+
     Sophomore: {
       Fall: [
         { code: 'COSC 101', name: 'Foundations of Computer Science', credits: 3 },
@@ -591,7 +586,6 @@
           name: 'Data Structure and Algorithms',
           credits: 3
         },
-  
         { code: 'MATH 232', name: 'Engineering Mathematics', credits: 3 },
         {
           code: 'MATH 214',
@@ -599,7 +593,6 @@
           credits: 3
         },
         { code: 'MATH 234', name: 'Discrete Mathematics', credits: 3 }
-  
       ],
       Summer: [
         {
@@ -609,7 +602,7 @@
         }
       ]
     },
-  
+
     Junior: {
       Fall: [
         {
@@ -622,27 +615,21 @@
           name: 'Automata, Computability and Complexity',
           credits: 3
         },
-  
         {
           code: 'ECCE 336',
           name: 'Introduction to Software Engineering',
           credits: 3
         },
-  
         {
           code: 'ECCE 354',
           name: 'Operating Systems',
           credits: 3
         },
-  
         {
           code: 'ECCE 356',
           name: 'Computer Networks',
           credits: 4
-        },
-  
-  
-  
+        }
       ],
       Spring: [
         {
@@ -650,34 +637,28 @@
           name: 'Design and Analysis of Algorithms',
           credits: 3
         },
-  
         {
           code: 'COSC 320',
           name: 'Principles of Programming Languages',
           credits: 3
         },
-  
         {
           code: 'COSC 330',
           name: 'Introduction to Artificial Intelligence',
           credits: 3
         },
-  
         {
           code: 'COSC 340',
           name: 'Introduction to Computer Security',
           credits: 3
         },
-  
         {
           code: 'GENS 300',
           name: 'Career Preparation',
           credits: 1
         }
-  
       ],
       Summer: [
-  
         {
           code: 'ENGR 399',
           name: 'Internship',
@@ -685,16 +666,14 @@
         }
       ]
     },
-  
+
     Senior: {
       Fall: [
-  
         {
           code: 'ECCE 434',
           name: 'Database Systems',
           credits: 3
         },
-  
         {
           code: 'COSC 497',
           name: 'Senior Design Project I',
@@ -752,7 +731,6 @@
       ]
     }
   };
-
 
   let hoveredCode = null;
   let clickedCode = null;
